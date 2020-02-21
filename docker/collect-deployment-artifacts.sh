@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #
 # Helper script to collect executables, config and libraries needed for minimal docker
 
