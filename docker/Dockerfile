@@ -1,5 +1,8 @@
 FROM arm64v8/alpine:3.11 as build
 
+LABEL maintainer="Sebastian Schildt <sebastian.schildt@de.bosch.com>"
+
+
 COPY docker/qemu-aarch64-static /usr/bin/qemu-aarch64-static
 
 RUN apk update && apk add cmake wget alpine-sdk glib-dev openssl-dev libstdc++
@@ -23,7 +26,6 @@ RUN make
 RUN ls
 RUN /kuksa.val/docker/collect-deployment-artifacts.sh
 
-#RUN ls -ahl /usr/local/lib/
 
 FROM arm64v8/alpine:3.11
 
