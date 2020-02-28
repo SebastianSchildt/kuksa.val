@@ -30,6 +30,9 @@ COPY --from=build /deploy /kuksa.val
 WORKDIR /kuksa.val
 
 ENV LOG_LEVEL=INFO
+#Usually you want this to be 0.0.0.0 when using porter port expose via -p. 
+ENV BIND_ADDRESS=0.0.0.0
+
 EXPOSE 8090/tcp
 
 CMD /kuksa.val/startkuksaval.sh

@@ -1,5 +1,6 @@
 #!/bin/sh
-
+# 
+# Script for starting kuksa.val inside docker
 
 echo "Starting kuksa.val"
 
@@ -14,7 +15,7 @@ fi
 
 mkdir -p /config/certs
 
-if [ -e /config/certs/server.key ]
+if [ -e /config/certs/Server.key ]
 then
     echo "Using existing server keys"
 else
@@ -24,4 +25,4 @@ else
 fi
 
 
-LD_LIBRARY_PATH=./ ./w3c-visserver --vss /config/vss.json --cert-path /config/certs --log-level $LOG_LEVEL
+LD_LIBRARY_PATH=./ ./w3c-visserver --vss /config/vss.json --cert-path /config/certs --log-level $LOG_LEVEL --address $BIND_ADDRESS

@@ -1,3 +1,4 @@
+#Quick docker for doing development
 FROM ubuntu:bionic as build
 
 RUN apt-get  update 
@@ -27,13 +28,6 @@ RUN  rm -rf /kuksa.val/build  && mkdir  /kuksa.val/build
 WORKDIR /kuksa.val/build
 RUN cmake ..
 RUN make
-RUN ls
-RUN /kuksa.val/docker/collect-deployment-artifacts.sh
 
-#RUN ls -ahl /usr/local/lib/
-
-FROM ubuntu:bionic
-
-COPY --from=build /deploy /kuksa.val
-
+CMD /bin/bash
 
