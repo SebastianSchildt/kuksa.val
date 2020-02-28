@@ -1,16 +1,8 @@
-FROM ubuntu:bionic as build
+FROM alpine:3.11 as build
 
-RUN apt-get  update 
-RUN apt-get -y install libssl-dev  \
-                        libglib2.0-dev \
-                        pkg-config \
-                        build-essential \
-                        gnupg2 \ 
-                        wget \ 
-                        software-properties-common
-RUN wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null |  apt-key add -
-RUN apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main'
-RUN apt  update && apt -y install cmake
+
+RUN apk update && apk add cmake wget alpine-sdk glib-dev openssl-dev libstdc++
+
 
 #Build Boost 1.67
 RUN mkdir /buildboost
@@ -32,8 +24,14 @@ RUN /kuksa.val/docker/collect-deployment-artifacts.sh
 
 #RUN ls -ahl /usr/local/lib/
 
-FROM ubuntu:bionic
+FROM alpine:3.11
 
 COPY --from=build /deploy /kuksa.val
+WORKDIR /kuksa.val
+
+ENV LOG_LEVEL=INFO
+EXPOSE 8090/tcp
+
+CMD /kuksa.val/startkuksaval.sh
 
 
