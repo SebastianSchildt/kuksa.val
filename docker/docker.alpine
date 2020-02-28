@@ -27,5 +27,11 @@ RUN /kuksa.val/docker/collect-deployment-artifacts.sh
 FROM alpine:3.11
 
 COPY --from=build /deploy /kuksa.val
+WORKDIR /kuksa.val
+
+ENV LOG_LEVEL=INFO
+EXPOSE 8090/tcp
+
+CMD /kuksa.val/startkuksaval.sh
 
 
