@@ -1,5 +1,6 @@
-FROM alpine:3.11 as build
+FROM arm64v8/alpine:3.11 as build
 
+COPY docker/qemu-aarch64-static /usr/bin/qemu-aarch64-static
 
 RUN apk update && apk add cmake wget alpine-sdk glib-dev openssl-dev libstdc++
 
@@ -24,7 +25,7 @@ RUN /kuksa.val/docker/collect-deployment-artifacts.sh
 
 #RUN ls -ahl /usr/local/lib/
 
-FROM alpine:3.11
+FROM arm64v8/alpine:3.11
 
 COPY --from=build /deploy /kuksa.val
 WORKDIR /kuksa.val
