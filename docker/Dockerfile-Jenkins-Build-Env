@@ -1,0 +1,20 @@
+# We have to use an ubuntu as base image to install and run required packages
+FROM ubuntu:18.04
+
+# Install all the pre-requisits we need in the docker image
+RUN apt-get update \
+  && apt-get install -y qemu-user-static docker.io sudo bzip2
+  
+  
+
+
+#Group 999 is docker group on host
+RUN groupadd -g 999 test 
+#RUN cat /etc/group
+#add jenkins user to docker as well as test group
+RUN useradd -u 1000 -G test,docker jenkins
+RUN usermod -aG test jenkins
+#RUN cat /etc/group
+#RUN cat /etc/passwd
+
+RUN echo "jenkins     ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
