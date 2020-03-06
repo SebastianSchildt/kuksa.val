@@ -9,12 +9,14 @@ node('docker') {
             sudo chmod ugo+rwx /var/run/docker.sock
             ./docker/build.sh amd64
             '''
+            sh './docker/build.sh arm64'
         }
         stage('Collect') {
 			sh '''
             mkdir -p artifacts
             rm -f artifacts/*
-			docker save  amd64/kuksa-val:0.1.1 | bzip2 -9 > artifacts/kuksa-val.tar.bz2
+			docker save  amd64/kuksa-val:0.1.1 | bzip2 -9 > artifacts/kuksa-val-amd64.tar.bz2
+            docker save  arm64/kuksa-val:0.1.1 | bzip2 -9 > artifacts/kuksa-val-arm64.tar.bz2
             '''
             archiveArtifacts artifacts: 'artifacts/*.bz2'
         }
