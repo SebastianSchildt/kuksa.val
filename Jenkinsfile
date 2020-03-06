@@ -13,7 +13,7 @@ node('docker') {
         stage('Collect') {
 			sh '''
             mkdir -p artifacts
-            rm -r artifacts/*
+            rm -f artifacts/*
 			docker save  amd64/kuksa-val:0.1.1 | bzip -9 > artifacts/kuksa-val.tar.bz2
             '''
             archiveArtifacts artifacts: 'artifacts/*.bz2'
