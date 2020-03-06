@@ -15,4 +15,3 @@ node('docker') {
     }
 }
 
-Dockerfile-Jenkins-Build-Env
