@@ -29,7 +29,7 @@ ADD . /kuksa.val
 RUN  rm -rf /kuksa.val/build  && mkdir  /kuksa.val/build 
 WORKDIR /kuksa.val/build
 RUN cmake ..
-RUN make
+RUN make -j 4
 RUN ls
 RUN /kuksa.val/docker/collect-deployment-artifacts.sh
 
