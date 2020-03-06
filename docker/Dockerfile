@@ -1,3 +1,10 @@
+# Copyright Robert Bosch GmbH, 2020. Part of the Eclipse Kuksa Project.
+#
+# All rights reserved. This configuration file is provided to you under the
+# terms and conditions of the Eclipse Distribution License v1.0 which
+# accompanies this distribution, and is available at
+# http://www.eclipse.org/org/documents/edl-v10.php
+
 FROM arm64v8/alpine:3.11 as build
 
 LABEL maintainer="Sebastian Schildt <sebastian.schildt@de.bosch.com>"
@@ -15,7 +22,7 @@ RUN wget   https://dl.bintray.com/boostorg/release/1.67.0/source/boost_1_67_0.ta
 RUN tar xvjf boost_1_67_0.tar.bz2
 WORKDIR /buildboost/boost_1_67_0
 RUN ./bootstrap.sh
-RUN ./b2 install
+RUN ./b2 -j 6 install
 
 
 ADD . /kuksa.val
