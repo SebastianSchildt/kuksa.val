@@ -15,10 +15,14 @@ node('docker') {
 			sh '''
             mkdir -p artifacts
             rm -f artifacts/*
-			docker save  amd64/kuksa-val:0.1.1 | bzip2 -9 > artifacts/kuksa-val-amd64.tar.bz2
-            docker save  arm64/kuksa-val:0.1.1 | bzip2 -9 > artifacts/kuksa-val-arm64.tar.bz2
+            docker save $(docker images --filter "reference=amd64/kuksa-val*" -q | head -1) | bzip2 -9 > artifacts/kuksa-val-amd64.tar.bz2
+			docker save $(docker images --filter "reference=arm64/kuksa-val*" -q | head -1) | bzip2 -9 > artifacts/kuksa-val-arm64.tar.bz2
+			#docker save  amd64/kuksa-val:0.1.1 | bzip2 -9 > artifacts/kuksa-val-amd64.tar.bz2
+            #docker save  arm64/kuksa-val:0.1.1 | bzip2 -9 > artifacts/kuksa-val-arm64.tar.bz2
             '''
-            archiveArtifacts artifacts: 'artifacts/*.bz2'
+        }
+        stage ('Archive') {
+            archiveArtifacts artifacts: 'artifacts/*.bz2' 
         }
     }
 }
